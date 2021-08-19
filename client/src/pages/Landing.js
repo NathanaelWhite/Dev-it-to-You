@@ -25,13 +25,13 @@ const Landing = () => {
               <h1>Dev Me Up</h1>
             </Paper>
           </Grid>
-          {/* <p>
+          <p>
             Let'd find some developers and make a project out of this world!
           </p>
           <button>Login</button>
-          <button>Sign Up</button> */}
+          <button onClick= {SignUp}>Sign Up</button>
           {/* <SignUp /> */}
-          <Login />
+          {/* <Login /> */}
         </Grid>
       </div>
     </main>
