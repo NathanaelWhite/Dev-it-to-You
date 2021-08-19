@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import SignUp from "./signup-form";
+import Login from "./login";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,11 +25,13 @@ const Landing = () => {
               <h1>Dev Me Up</h1>
             </Paper>
           </Grid>
-          <p>
+          {/* <p>
             Let'd find some developers and make a project out of this world!
           </p>
           <button>Login</button>
-          <button>Sign Up</button>
+          <button>Sign Up</button> */}
+          {/* <SignUp /> */}
+          <Login />
         </Grid>
       </div>
     </main>
