@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import Landing from "./pages/Landing";
+import SignUp from "./signup-form";
 
 function App() {
   return (
@@ -14,12 +15,12 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/" component={Landing} />
+            <SignUp />
           </Switch>
         </div>
         <Footer />
       </div>
     </Router>
   );
-}
 
 export default App;
