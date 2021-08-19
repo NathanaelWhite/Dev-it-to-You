@@ -1,5 +1,11 @@
+import SignUp from "./signup-form";
+
 function App() {
-  return <div>Hello World</div>;
+  return <SignUp />;
 }
+
+
+
+
 
 export default App;
