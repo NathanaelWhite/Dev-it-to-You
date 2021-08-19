@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 
 import Landing from "./pages/Landing";
 import SignUp from "./pages/signup-form";
+import Login from "./pages/login";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Landing} />
             <SignUp />
+            <Login />
           </Switch>
         </div>
         <Footer />
