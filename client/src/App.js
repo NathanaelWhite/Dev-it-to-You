@@ -6,16 +6,18 @@ import Footer from "./components/Footer";
 
 import Landing from "./pages/Landing";
 import SignUp from "./pages/signup-form";
+import Login from "./pages/login";
 
 function App() {
   return (
     <Router>
       <div>
-        {window.location.pathname !== "/" && <Header />}
+        <Header />
         <div>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </div>
         <Footer />
