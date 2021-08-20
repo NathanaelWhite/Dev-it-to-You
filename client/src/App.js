@@ -11,17 +11,13 @@ import Login from "./pages/login";
 function App() {
   return (
     <Router>
-      <div>
-        {window.location.pathname !== "/" && <Header />}
-        <div>
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <SignUp />
-            <Login />
-          </Switch>
-        </div>
-        <Footer />
-      </div>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={Login} />
+      </Switch>
+      <Footer />
     </Router>
   );
 }
