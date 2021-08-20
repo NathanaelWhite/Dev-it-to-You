@@ -3,9 +3,10 @@ const bcrypt = require('bcrypt');
 
 const tagsSchema = new Schema({
   tags: {
-    type: String,
-    enum: ['HTML', 'Javascript', 'CSS'],
+    type: String
   },
 });
 
 const Tags = model('Tags', tagsSchema);
+
+module.exports = Tags;
