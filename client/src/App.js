@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import Landing from "./pages/Landing";
-import SignUp from "./signup-form";
+import SignUp from "./pages/signup-form";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/" component={Landing} />
-            <SignUp />
+            <Route exact path="/signup" component={SignUp} />
           </Switch>
         </div>
         <Footer />
