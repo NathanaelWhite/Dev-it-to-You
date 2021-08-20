@@ -42,6 +42,7 @@ const typeDefs = gql`
       description: String
       tags: [Tag]
     ): User
+    addConnection(connectionId: ID!): User
   }
 `;
 
