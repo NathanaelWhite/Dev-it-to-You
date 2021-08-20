@@ -9,3 +9,5 @@ const tagsSchema = new Schema({
 });
 
 const Tags = model('Tags', tagsSchema);
+
+module.exports = Tags;
