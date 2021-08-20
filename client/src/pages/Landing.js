@@ -1,39 +1,57 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import SignUp from "./signup-form";
-import Login from "./login";
+import { Link } from "react-router-dom";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-}));
+const useStyles = makeStyles((theme) => {
+  console.log(theme);
+  return {
+    root: {
+      flexGrow: 1,
+      textAlign: "center",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
+    marginer: {
+      margin: `100px 0`,
+    },
+  };
+});
 
 const Landing = () => {
   const classes = useStyles();
 
   return (
-    <main>
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <h1>Dev Me Up</h1>
-            </Paper>
-          </Grid>
-          <p>
-            Let'd find some developers and make a project out of this world!
-          </p>
-          <button>Login</button>
-          <button>Sign Up</button>
-          {/* <SignUp /> */}
-          {/* <Login /> */}
-        </Grid>
-      </div>
+    <main className={classes.root}>
+      <Typography variant="h1" classes={{ root: classes.marginer }}>
+        Dev Me Up
+      </Typography>
+      <Typography variant="body1" classes={{ root: classes.marginer }}>
+        Let'd find some developers and make a project out of this world!
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        classes={{ root: classes.marginer }}
+        component={Link}
+        to={"/login"}
+      >
+        Login
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        classes={{ root: classes.marginer }}
+        component={Link}
+        to={"/signup"}
+      >
+        Sign Up
+      </Button>
     </main>
   );
 };

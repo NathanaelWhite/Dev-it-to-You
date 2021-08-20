@@ -1,14 +1,15 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: true,
       trim: true,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: true,
       trim: true,
@@ -17,25 +18,22 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Not a valid email address'],
+      match: [/.+@.+\..+/, "Not a valid email address"],
     },
     password: {
       type: String,
       required: true,
       minlength: 8,
     },
-    connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    blurb: {
+    connections: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    description: {
       type: String,
       maxlength: 140,
       trim: true,
     },
-    tags: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Tags',
-      },
-    ],
+    tags: {
+      type: String,
+    },
   },
   {
     toJSON: {
@@ -44,8 +42,8 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -57,6 +55,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model('User', userSchema);
+userSchema.plugin(mongoosePaginate);
+
+const User = model("User", userSchema);
 
 module.exports = User;
