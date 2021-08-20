@@ -30,8 +30,8 @@ const Landing = () => {
           </p>
           <button>Login</button>
           <button>Sign Up</button>
-          <SignUp />
-          <Login />
+          {/* <SignUp /> */}
+          {/* <Login /> */}
         </Grid>
       </div>
     </main>
