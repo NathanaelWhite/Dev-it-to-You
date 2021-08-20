@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const bcrypt = require('bcrypt');
+const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -18,25 +18,22 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Not a valid email address'],
+      match: [/.+@.+\..+/, "Not a valid email address"],
     },
     password: {
       type: String,
       required: true,
       minlength: 8,
     },
-    connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    connections: [{ type: Schema.Types.ObjectId, ref: "User" }],
     description: {
       type: String,
       maxlength: 140,
       trim: true,
     },
-    tags: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Tags',
-      },
-    ],
+    tags: {
+      type: String,
+    },
   },
   {
     toJSON: {
@@ -45,8 +42,8 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -60,6 +57,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 userSchema.plugin(mongoosePaginate);
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

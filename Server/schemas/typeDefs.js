@@ -8,21 +8,11 @@ const typeDefs = gql`
     email: String
     connections: [User]
     description: String
-    tags: [Tag]
-  }
-  type Tag {
-    _id: ID
-    name: String
+    tags: String
   }
   type Auth {
     token: ID!
     user: User
-  }
-  input ConnectionId {
-    connectionId: Int
-  }
-  input TagInput {
-    tag: String
   }
   type Query {
     me: User
@@ -38,16 +28,14 @@ const typeDefs = gql`
       email: String!
       password: String!
       description: String
-      tags: [TagInput]
     ): Auth
     updateUser(
       firstName: String
       lastName: String
       email: String
-      connections: [ConnectionId]
       password: String
       description: String
-      tags: [TagInput]
+      tags: String
     ): User
     addConnection(connectionId: ID!): User
   }
