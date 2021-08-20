@@ -30,6 +30,10 @@ const resolvers = {
         .select('-__v -password')
         .populate('tags');
     },
+    allUsers: async () => {
+      const usersData = await User.find().populate('tags');
+      return usersData;
+    },
   },
 
   Mutation: {

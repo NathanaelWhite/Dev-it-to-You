@@ -18,10 +18,17 @@ const typeDefs = gql`
     token: ID!
     user: User
   }
+  input ConnectionId {
+    connectionId: Int
+  }
+  input TagInput {
+    tag: String
+  }
   type Query {
     me: User
     users(page: Int!): [User]
     user(username: String!): User
+    allUsers: [User]
   }
   type Mutation {
     login(email: String!, password: String!): Auth
@@ -31,16 +38,16 @@ const typeDefs = gql`
       email: String!
       password: String!
       description: String
-      tags: [Tag]
+      tags: [TagInput]
     ): Auth
     updateUser(
       firstName: String
       lastName: String
       email: String
-      connections: [User]
+      connections: [ConnectionId]
       password: String
       description: String
-      tags: [Tag]
+      tags: [TagInput]
     ): User
     addConnection(connectionId: ID!): User
   }
