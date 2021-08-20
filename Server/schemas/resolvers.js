@@ -25,10 +25,12 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username })
-        .select('-__v -password')
-        .populate('tags');
+    user: async (parent, { email }) => {
+      return User.findOne({ email }).select('-__v -password').populate('tags');
+    },
+    allUsers: async () => {
+      const usersData = await User.find().populate('tags');
+      return usersData;
     },
   },
 
