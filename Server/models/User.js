@@ -26,7 +26,7 @@ const userSchema = new Schema(
       minlength: 8,
     },
     connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    blurb: {
+    description: {
       type: String,
       maxlength: 140,
       trim: true,
