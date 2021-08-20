@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
@@ -20,7 +20,7 @@ const typeDefs = gql`
   }
   type Query {
     me: User
-    users(first:5 offset:5): [User]
+    users(page: Int!): [User]
     user(username: String!): User
   }
   type Mutation {
@@ -42,6 +42,7 @@ const typeDefs = gql`
       description: String
       tags: [Tag]
     ): User
+    addConnection(connectionId: ID!): User
   }
 `;
 
