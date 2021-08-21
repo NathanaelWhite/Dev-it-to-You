@@ -21,18 +21,6 @@ export const QUERY_ME = gql`
   }
 `;
 
-export const QUERY_USERS = gql`
-  query users($page: Int!) {
-    users(page: $page) {
-      _id
-      firstName
-      lastName
-      description
-      tags
-    }
-  }
-`;
-
 export const QUERY_USER = gql`
   query user($_id: ID!) {
     user(_id: $_id) {
@@ -45,3 +33,4 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
