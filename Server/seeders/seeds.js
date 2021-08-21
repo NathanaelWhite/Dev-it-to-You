@@ -1,9 +1,9 @@
-const faker = require('faker');
+const faker = require("faker");
 
-const db = require('../config/connection');
-const { User } = require('../models');
+const db = require("../config/connection");
+const { User } = require("../models");
 
-db.once('open', async () => {
+db.once("open", async () => {
   await User.deleteMany({});
 
   // create user data
@@ -21,6 +21,6 @@ db.once('open', async () => {
 
   const createdUsers = await User.collection.insertMany(userData);
   console.log(createdUsers);
-  console.log('all done!');
+  console.log("all done!");
   process.exit(0);
 });
