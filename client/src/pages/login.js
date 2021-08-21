@@ -12,6 +12,7 @@ import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import profile from "./profile";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
