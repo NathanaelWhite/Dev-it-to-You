@@ -1,32 +1,35 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from './components/Header';
+import Footer from './components/Footer';
 
-import Landing from "./pages/Landing";
-import SignUp from "./pages/signup-form";
-import Login from "./pages/login";
+
+import Landing from './pages/Landing';
+import SignUp from './pages/signup-form';
+import Login from './pages/login';
+import Feed from './pages/Feed';
 import Profile from './pages/profile';
 
+
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("id_token");
+  const token = localStorage.getItem('id_token');
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });
@@ -50,10 +53,13 @@ function App() {
         <Router>
           <Header />
           <Switch>
+
             <Route exact path="/" component={Landing} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile/:username?" component={Profile} />
+            <Route exact path='/feed' component={Feed} />
+           
           </Switch>
           <Footer />
         </Router>
