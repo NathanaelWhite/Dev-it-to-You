@@ -28,6 +28,7 @@ const typeDefs = gql`
       email: String!
       password: String!
       description: String
+      tags: String
     ): Auth
     updateUser(
       firstName: String
