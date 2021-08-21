@@ -82,7 +82,7 @@ export default function SignUp() {
     "Minimum 6 characters required"
   );
   const [buttonAble, setButtonAble] = useState(true);
-  const [addUserMut, { data, loading, error }] = useMutation(ADD_USER);
+  const [addUserMut, { error }] = useMutation(ADD_USER);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -162,26 +162,23 @@ export default function SignUp() {
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
 
-    console.log(userForm, userSkills);
+    try {
+      const { data } = await addUserMut({
+        variables: {
+          ...userForm,
+          tags: userSkills.join(" "),
+        },
+      });
 
-    // addUserMut({
-    //   variables: {
-    //     ...userForm,
-    //     tags: userSkills.join(" "),
-    //   },
-    // });
+      Auth.login(data.addUser.token);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  useEffect(() => {
-    if (data && !error) {
-      Auth.login(data.addUser.token);
-    }
-  }, [data]);
-
-  // console.log(data, loading, error);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -301,6 +298,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </form>
+        {error && <Typography color="error">Sign Up Failed</Typography>}
       </div>
       <Box mt={5}></Box>
     </Container>
