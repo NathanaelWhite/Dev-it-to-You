@@ -6,6 +6,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
+import Auth from "../../utils/auth";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -35,6 +37,12 @@ const Header = () => {
     return null;
   }
 
+  const logout = (e) => {
+    e.preventDefault();
+
+    Auth.logout();
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -43,10 +51,14 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             <Link to="/">Dev Me Up</Link>
           </Typography>
-          <Button color="inherit">Profile</Button>
-          <Button color="inherit">
-            <a href="/">Logout</a>
-          </Button>
+          {Auth.loggedIn() && (
+            <>
+              <Button color="inherit">Profile</Button>
+              <Button color="inherit" onClick={logout}>
+                <a href="/">Logout</a>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
