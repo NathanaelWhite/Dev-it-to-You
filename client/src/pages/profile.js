@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 
+
 import Connections from "../components/connections";
 
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -16,7 +17,9 @@ import Container from "@material-ui/core/Container";
 
 
 
+const Profile = () => {
 
+   
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,22 +28,23 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       alignItems: "center",
     },
+    form: {
+        width: "100%",
+        marginTop: theme.spacing(3),
+      },
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
   }));
 
 
-
-
-
-
-const Profile = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
   const { username: userParam } = useParams();
-
+ 
+  // adds user to connection
   const [addConnection] = useMutation(ADD_CONNECTION);
+   //queries personal User
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
@@ -83,7 +87,17 @@ const Profile = (props) => {
         <Typography component="h1" variant="h5">
         Viewing {userParam ? `${user.username}'s` : "your"} profile.
         </Typography>
+        
+        <div id='profileimg' className={classes.paper}>
+          <img src="" alt='profileimg' className={classes.imgStyles} />
+        </div>
 
+        <Typography component="h1" variant="h5">
+        Hello, My name is  {userParam ? `${user.me.firstname}'s` : "firstname" } 
+        </Typography>
+        
+        
+       
         {userParam && ( 
         <Button
             type="submit"
