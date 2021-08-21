@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +15,10 @@ import FingerprintIcon from "@material-ui/icons/Fingerprint";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,6 +73,7 @@ export default function SignUp() {
     description: "",
     tags: "",
   });
+  const [userSkills, setUserSkills] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,11 +84,24 @@ export default function SignUp() {
     });
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(userForm);
+  const handleSkillChange = (e) => {
+    const { checked, name } = e.target;
+    if (checked) {
+      setUserSkills([...userSkills, name]);
+    } else {
+      let newArr = userSkills.filter((skill) => skill !== name);
+      setUserSkills(newArr);
+    }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    setUserForm({
+      ...userForm,
+      tags: userSkills.join(" "),
+    });
+  };
+  console.log(userForm);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -159,12 +177,16 @@ export default function SignUp() {
               <FormControl component="fieldset">
                 <FormLabel component="legend">Skills</FormLabel>
                 <FormGroup>
-                  {skills.map((item) => {
+                  {skills.map((item, i) => {
                     return (
                       <FormControlLabel
+                        key={i}
                         control={
                           <Checkbox
                             name={item.replace(" ", "").toLowerCase()}
+                            onChange={(e) => {
+                              handleSkillChange(e);
+                            }}
                           />
                         }
                         label={item}
