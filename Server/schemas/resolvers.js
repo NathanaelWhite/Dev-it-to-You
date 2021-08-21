@@ -9,27 +9,16 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("tags");
-
         return userData;
       }
 
       throw new AuthenticationError("Not logged in");
     },
-    users: async (parent, args, context) => {
-      let page = args.page;
-      if (context.user) {
-        const usersData = await User.paginate({}, { page: page, limit: 10 })
-          .select("-__v -password")
-          .populate("tags");
-        return usersData;
-      }
-      throw new AuthenticationError("Not logged in");
-    },
     user: async (parent, { email }) => {
-      return User.findOne({ email }).select("-__v -password").populate("tags");
+      return User.findOne({ email }).select("-__v -password");
     },
     allUsers: async () => {
-      const usersData = await User.find().populate("tags");
+      const usersData = await User.find();
       return usersData;
     },
   },
