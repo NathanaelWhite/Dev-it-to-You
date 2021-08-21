@@ -74,16 +74,83 @@ export default function SignUp() {
     tags: "",
   });
   const [userSkills, setUserSkills] = useState([]);
+  const [emailErr, setEmailErr] = useState(true);
+  const [firstNameErr, setFirstNameErr] = useState(true);
+  const [lastNameErr, setLastNameErr] = useState(true);
+  const [passwordErr, setPasswordErr] = useState(true);
+  const [passwordErrText, setPasswordErrText] = useState(
+    "Minimum 6 characters required"
+  );
+  const [buttonAble, setButtonAble] = useState(true);
   const [addUserMut, { data, loading, error }] = useMutation(ADD_USER);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setUserForm({
-      ...userForm,
-      [name]: value,
-    });
+    switch (name) {
+      case "email":
+        if (/.+@.+\..+/.test(value)) {
+          setEmailErr(false);
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setEmailErr(true);
+        }
+        break;
+      case "password":
+        if (value.length >= 8) {
+          setPasswordErr(false);
+          setPasswordErrText("");
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setPasswordErr(true);
+          setPasswordErrText("Minimum 6 characters required");
+        }
+        break;
+      case "firstName":
+        if (value) {
+          setFirstNameErr(false);
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setFirstNameErr(true);
+        }
+        break;
+      case "lastName":
+        if (value) {
+          setLastNameErr(false);
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setLastNameErr(true);
+        }
+        break;
+      case "description":
+        setUserForm({
+          ...userForm,
+          [name]: value,
+        });
+
+        break;
+    }
   };
+
+  useEffect(() => {
+    if (!emailErr && !firstNameErr && !lastNameErr && !passwordErr) {
+      setButtonAble(false);
+    } else {
+      setButtonAble(true);
+    }
+  }, [emailErr, firstNameErr, lastNameErr, passwordErr]);
 
   const handleSkillChange = (e) => {
     const { checked, name } = e.target;
@@ -98,16 +165,14 @@ export default function SignUp() {
   const handleClick = (e) => {
     e.preventDefault();
 
-    setUserForm({
-      ...userForm,
-      tags: userSkills.join(" "),
-    });
+    console.log(userForm, userSkills);
 
-    addUserMut({
-      variables: {
-        ...userForm,
-      },
-    });
+    // addUserMut({
+    //   variables: {
+    //     ...userForm,
+    //     tags: userSkills.join(" "),
+    //   },
+    // });
   };
 
   useEffect(() => {
@@ -127,13 +192,14 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleClick}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
+                error={emailErr}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -146,6 +212,8 @@ export default function SignUp() {
                 variant="outlined"
                 required={true}
                 fullWidth
+                error={passwordErr}
+                helperText={passwordErrText}
                 name="password"
                 label="Password"
                 type="password"
@@ -159,6 +227,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                error={firstNameErr}
                 id="firstName"
                 label="First Name"
                 name="firstName"
@@ -171,6 +240,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                error={lastNameErr}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -184,6 +254,7 @@ export default function SignUp() {
                 fullWidth
                 multiline
                 id="description"
+                name="description"
                 label="Enter a description of yourself..."
                 onChange={handleChange}
               />
@@ -211,20 +282,14 @@ export default function SignUp() {
                 </FormGroup>
               </FormControl>
             </Grid>
-            {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="rememberPassword" color="primary" />}
-                label="Remember me."
-              />
-            </Grid> */}
           </Grid>
           <Button
             type="submit"
             fullWidth
+            disabled={buttonAble}
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleClick}
           >
             Sign Up
           </Button>
