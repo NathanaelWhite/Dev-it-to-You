@@ -2,17 +2,17 @@ import React from "react";
 import { Redirect, useParams } from "react-router-dom";
 
 
-// import Connections from "../components/Connections";
+import Connections from "../components/connections";
 
-// import { useQuery, useMutation } from "@apollo/react-hooks";
-// import { QUERY_USER, QUERY_ME } from "../utils/queries";
-// import { ADD_FRIEND } from "../utils/mutations";
-// import Auth from "../utils/auth";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { QUERY_USER, QUERY_ME } from "../utils/queries";
+import { ADD_CONNECTION } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 const Profile = (props) => {
   const { username: userParam } = useParams();
 
-//   const [addFriend] = useMutation(ADD_FRIEND);
+  const [addConnection] = useMutation(ADD_CONNECTION);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
@@ -38,7 +38,7 @@ const Profile = (props) => {
 
   const handleClick = async () => {
     try {
-      await addFriend({
+      await addconnect({
         variables: { id: user._id },
       });
     } catch (e) {
@@ -55,7 +55,7 @@ const Profile = (props) => {
 
         {userParam && (
           <button className="btn ml-auto" onClick={handleClick}>
-            Add Friend
+            Add Connection
           </button>
         )}
       </div>
@@ -66,10 +66,10 @@ const Profile = (props) => {
         </div>
 
         <div className="col-12 col-lg-3 mb-3">
-          <FriendList
+          <Connections
             username={user.username}
-            friendCount={user.friendCount}
-            friends={user.friends}
+            connectCount={user.connectCount}
+            connects={user.connects}
           />
         </div>
       </div>
