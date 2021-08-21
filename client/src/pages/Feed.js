@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { ADD_CONNECTION } from '../utils/mutations';
 import { QUERY_USERS } from '../utils/queries';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+
 const Feed = () => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      textAlign: 'center',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    card: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    cardContent: {
+      flexGrow: 1,
+    },
+  }));
   const classes = useStyles();
 
   //State
@@ -39,7 +62,7 @@ const Feed = () => {
   const handleInteraction = (event) => {
     if (event === 'connect') {
       try {
-        await addConnection({
+        addConnection({
           connectionId: displayedUser._id,
         });
         nextUser();
@@ -58,7 +81,7 @@ const Feed = () => {
     if (userQueue.length < 5) {
       try {
         pageNumber++;
-        await getUsers({ variables: { page: pageNumber } });
+        getUsers({ variables: { page: pageNumber } });
         updateUserQueue([...userQueue, ...data]);
       } catch (e) {
         console.error(e);
