@@ -32,7 +32,13 @@ const Feed = () => {
   //wrapper has sub functions
 
   //function for updating queue position, "next user"
-  //if queue length < 5, run the query function and update the state
+  const nextUser = () => {
+    //if queue length < 5, run the query function and update the state
+    if (userQueue.length < 5) {
+    }
+
+    updateDisplay(userQueue.unshift);
+  };
   //queue starts at index 0 of userdata
   //set variable to the first user with array method
   //update the state of the queue without the user returned
@@ -54,9 +60,9 @@ const Feed = () => {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant='h5' component='h2'>
-            {/* display the name of the user here */}
+            {displayedUser.firstName}
           </Typography>
-          <Typography>{/* this will be the description */}</Typography>
+          <Typography>{displayedUser.description}</Typography>
         </CardContent>
         <CardActions>
           {/* these buttons will run a update function */}
