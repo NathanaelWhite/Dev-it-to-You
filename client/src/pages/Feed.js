@@ -1,59 +1,77 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { ADD_CONNECTION } from '../utils/mutations';
+import { QUERY_USERS } from '../utils/queries';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const Feed = () => {
   const classes = useStyles();
 
-  const { loading, data } = useQuery();
+  //State
+  const { userQueue, updateUserQueue } = useState([]);
+  const { displayedUser, updateDisplay } = useState({});
 
-  //   const users = data?.
+  //Queries & Mutations
+  let pageNumber = 1;
 
-  //wrapper function for rendering
+  const [getUsers, { loading, data }] = useLazyQuery(QUERY_USERS);
+  const [addConnection] = useMutation(ADD_CONNECTION);
+
   //handle initial render
-  //call the query function to set initial states
-  //handle updates i.e. next user
+  useEffect(() => {
+    //call the query function to set initial states
+    getUsers({ variables: { page: pageNumber } });
+    updateUserQueue([...data]);
+    updateDisplay(userQueue[0]);
+  }, []);
+
+  if (loading) {
+    //Add clever loading page here for fun polish
+    return <div>loading...</div>;
+  }
 
   //wrapper function for interactions
   //possible interactions: connect or pass
 
   const handleInteraction = (event) => {
     if (event === 'connect') {
-      //if connect, run connections mutation
-      //then next user
+      try {
+        await addConnection({
+          connectionId: displayedUser._id,
+        });
+        nextUser();
+      } catch (e) {
+        console.error(e);
+      }
     } else if (event === 'pass') {
-      //if pass, then next user
+      nextUser();
     }
     //if select, create a user modal? to display more info?
   };
 
-  //wrapper has sub functions
-
-  //function for updating queue position, "next user"
+  //function for updating current displayed user
   const nextUser = () => {
     //if queue length < 5, run the query function and update the state
     if (userQueue.length < 5) {
+      try {
+        pageNumber++;
+        await getUsers({ variables: { page: pageNumber } });
+        updateUserQueue([...userQueue, ...data]);
+      } catch (e) {
+        console.error(e);
+      }
     }
-
-    updateDisplay(userQueue.unshift);
+    //queue starts at index 0 of userQueue
+    //set variable to the first user
+    let userToDisplay = userQueue[0];
+    //set the state of displayed user to variable
+    updateDisplay(userToDisplay);
+    //update the state of the queue without the user
+    updateUserQueue(userQueue.slice(1));
   };
-  //queue starts at index 0 of userdata
-  //set variable to the first user with array method
-  //update the state of the queue without the user returned
-  //set the state of displayed user to variable
-  //return the variable containing the next user
-
-  //function for making queries to populate queue
-  //run query and add data to the queue
-  //function for adding connections mutation
-  //get the id of the selected user
-  //run mutation with id
-  //returning the updated component
-
-  const { userQueue, updateUserQueue } = useState([]);
-  const { displayedUser, updateDisplay } = useState();
 
   return (
     <main className={classes.root}>
