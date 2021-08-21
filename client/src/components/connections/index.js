@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Connections = ({ connectCount, username, connects }) => {
   if (!connects || !connects.length) {
-    return <p className="bg-dark text-light p-3">{username}, connect with developers!</p>;
+    return <p className="bg-dark text-light p-3">{username} connect with developers!</p>;
   }
 
   return (
