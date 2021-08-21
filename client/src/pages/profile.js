@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 
 import Connections from "../components/connections";
@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(3, 0, 2),
     },
   }));
+
+
+
+
+
 
 const Profile = (props) => {
     const classes = useStyles();
@@ -73,7 +78,7 @@ const Profile = (props) => {
   return (
     <Container component="main" maxWidth="xs">
         <CssBaseline />
-    {/* <div> */}
+   
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
         Viewing {userParam ? `${user.username}'s` : "your"} profile.
@@ -93,17 +98,14 @@ const Profile = (props) => {
         )}
       </div>
 
-      <div className="flex-row justify-space-between mb-3">
-
-        <div className="col-12 col-lg-3 mb-3">
+        <div className={classes.paper}>
           <Connections
             username={user.username}
             connectionCount={user.connectionCount}
             connections={user.connections}
           />
         </div>
-      </div>
-    {/* </div> */}
+     
     </Container>
   );
 };
