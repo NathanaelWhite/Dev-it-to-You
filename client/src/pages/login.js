@@ -42,8 +42,36 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [login, { error }] = useMutation(LOGIN_USER);
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setUserForm({
+      ...userForm,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(userForm);
+    try {
+      const { data } = await login({
+        variables: { ...userForm },
+      });
+
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error(e);
+    }
+
+    setUserForm({
+      email: "",
+      password: "",
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -55,7 +83,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Log in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -66,6 +94,8 @@ export default function Login() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
+                value={userForm.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -78,6 +108,8 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
+                value={userForm.password}
               />
             </Grid>
           </Grid>
@@ -98,6 +130,7 @@ export default function Login() {
             </Grid>
           </Grid>
         </form>
+        {error && <Typography color="error">Login Failed</Typography>}
       </div>
       <Box mt={5}></Box>
     </Container>

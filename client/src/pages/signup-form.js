@@ -79,7 +79,7 @@ export default function SignUp() {
   const [lastNameErr, setLastNameErr] = useState(true);
   const [passwordErr, setPasswordErr] = useState(true);
   const [passwordErrText, setPasswordErrText] = useState(
-    "Minimum 6 characters required"
+    "Minimum 8 characters required"
   );
   const [buttonAble, setButtonAble] = useState(true);
   const [addUserMut, { error }] = useMutation(ADD_USER);
@@ -109,7 +109,7 @@ export default function SignUp() {
           });
         } else {
           setPasswordErr(true);
-          setPasswordErrText("Minimum 6 characters required");
+          setPasswordErrText("Minimum 8 characters required");
         }
         break;
       case "firstName":
