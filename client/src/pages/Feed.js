@@ -44,11 +44,12 @@ const Feed = () => {
   const [addConnection] = useMutation(ADD_CONNECTION);
 
   //handle initial render
-  useEffect(() => {
+  useEffect(async () => {
     //call the query function to set initial states
     getUsers({ variables: { page: pageNumber } });
-    updateUserQueue([...data]);
-    updateDisplay(userQueue[0]);
+    console.log(await data);
+    // updateUserQueue([...data]);
+    // updateDisplay(userQueue[0]);
   }, []);
 
   if (loading) {
@@ -101,11 +102,9 @@ const Feed = () => {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant='h5' component='h2'>
-            {displayedUser.firstName}
+            {displayedUser?.firstName || 'TestName'}
           </Typography>
-          <Typography>{displayedUser.description}</Typography>
-        </CardContent>
-        <CardActions>
+          <Typography>{displayedUser?.description || 'TestDesc'}</Typography>
           {/* these buttons will run a update function */}
           <Button
             size='small'
@@ -121,7 +120,8 @@ const Feed = () => {
           >
             Connect
           </Button>
-        </CardActions>
+        </CardContent>
+        <CardActions></CardActions>
       </Card>
     </main>
   );
