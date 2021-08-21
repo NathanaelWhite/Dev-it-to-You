@@ -74,6 +74,7 @@ export default function SignUp() {
     tags: "",
   });
   const [userSkills, setUserSkills] = useState([]);
+  const [addUserMut, { data, loading, error }] = useMutation(ADD_USER);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,12 +97,26 @@ export default function SignUp() {
 
   const handleClick = (e) => {
     e.preventDefault();
+
     setUserForm({
       ...userForm,
       tags: userSkills.join(" "),
     });
+
+    addUserMut({
+      variables: {
+        ...userForm,
+      },
+    });
   };
-  console.log(userForm);
+
+  useEffect(() => {
+    if (data && !error) {
+      Auth.login(data.addUser.token);
+    }
+  }, [data]);
+
+  // console.log(data, loading, error);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
