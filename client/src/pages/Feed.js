@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_CONNECTION } from '../utils/mutations';
 import { QUERY_USERS } from '../utils/queries';
 
@@ -34,23 +34,19 @@ const Feed = () => {
   const classes = useStyles();
 
   //State
-  const { userQueue, updateUserQueue } = useState([]);
-  const { displayedUser, updateDisplay } = useState({});
+  const [displayedUser, setDisplay] = useState({});
 
   //Queries & Mutations
-  let pageNumber = 1;
-
-  const [getUsers, { loading, data }] = useLazyQuery(QUERY_USERS);
+  const { loading, data } = useQuery(QUERY_USERS);
   const [addConnection] = useMutation(ADD_CONNECTION);
 
+  //Query data
+  const userData = data?.allUsers || [];
+
   //handle initial render
-  useEffect(async () => {
-    //call the query function to set initial states
-    getUsers({ variables: { page: pageNumber } });
-    console.log(await data);
-    // updateUserQueue([...data]);
-    // updateDisplay(userQueue[0]);
-  }, []);
+  useEffect(() => {
+    setDisplay(userData[0]);
+  }, [userData]);
 
   if (loading) {
     //Add clever loading page here for fun polish
@@ -59,42 +55,24 @@ const Feed = () => {
 
   //wrapper function for interactions
   //possible interactions: connect or pass
-
   const handleInteraction = (event) => {
     if (event === 'connect') {
       try {
-        addConnection({
-          connectionId: displayedUser._id,
-        });
-        nextUser();
+        // addConnection({
+        //   connectionId: displayedUser._id,
+        // });
+        let userIndex = userData.indexOf(displayedUser);
+        setDisplay(userData[userIndex + 1]);
       } catch (e) {
         console.error(e);
       }
     } else if (event === 'pass') {
-      nextUser();
+      let userIndex = userData.indexOf(displayedUser);
+      setDisplay(userData[userIndex + 1]);
+    } else {
+      return console.log('error');
     }
     //if select, create a user modal? to display more info?
-  };
-
-  //function for updating current displayed user
-  const nextUser = () => {
-    //if queue length < 5, run the query function and update the state
-    if (userQueue.length < 5) {
-      try {
-        pageNumber++;
-        getUsers({ variables: { page: pageNumber } });
-        updateUserQueue([...userQueue, ...data]);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    //queue starts at index 0 of userQueue
-    //set variable to the first user
-    let userToDisplay = userQueue[0];
-    //set the state of displayed user to variable
-    updateDisplay(userToDisplay);
-    //update the state of the queue without the user
-    updateUserQueue(userQueue.slice(1));
   };
 
   return (
@@ -105,7 +83,6 @@ const Feed = () => {
             {displayedUser?.firstName || 'TestName'}
           </Typography>
           <Typography>{displayedUser?.description || 'TestDesc'}</Typography>
-          {/* these buttons will run a update function */}
           <Button
             size='small'
             color='primary'
