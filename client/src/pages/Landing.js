@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => {
     },
 
     marginer: {
-      margin: `100px 0`,
+      margin: `20px 0`,
     },
   };
 });
