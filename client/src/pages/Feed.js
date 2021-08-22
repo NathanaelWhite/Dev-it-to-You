@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_CONNECTION } from '../utils/mutations';
 import { QUERY_USERS } from '../utils/queries';
 
@@ -34,22 +34,19 @@ const Feed = () => {
   const classes = useStyles();
 
   //State
-  const { userQueue, updateUserQueue } = useState([]);
-  const { displayedUser, updateDisplay } = useState({});
+  const [displayedUser, setDisplay] = useState({});
 
   //Queries & Mutations
-  let pageNumber = 1;
+  const { loading, data } = useQuery(QUERY_USERS);
+  const [addConnection, { error }] = useMutation(ADD_CONNECTION);
 
-  const [getUsers, { loading, data }] = useLazyQuery(QUERY_USERS);
-  const [addConnection] = useMutation(ADD_CONNECTION);
+  //Query data
+  const userData = data?.allUsers || [];
 
   //handle initial render
   useEffect(() => {
-    //call the query function to set initial states
-    getUsers({ variables: { page: pageNumber } });
-    updateUserQueue([...data]);
-    updateDisplay(userQueue[0]);
-  }, []);
+    setDisplay(userData[0]);
+  }, [userData]);
 
   if (loading) {
     //Add clever loading page here for fun polish
@@ -58,42 +55,24 @@ const Feed = () => {
 
   //wrapper function for interactions
   //possible interactions: connect or pass
-
   const handleInteraction = (event) => {
     if (event === 'connect') {
       try {
         addConnection({
-          connectionId: displayedUser._id,
+          variables: { id: displayedUser._id },
         });
-        nextUser();
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
+      let userIndex = userData.indexOf(displayedUser);
+      setDisplay(userData[userIndex + 1]);
     } else if (event === 'pass') {
-      nextUser();
+      let userIndex = userData.indexOf(displayedUser);
+      setDisplay(userData[userIndex + 1]);
+    } else {
+      return console.log('error');
     }
     //if select, create a user modal? to display more info?
-  };
-
-  //function for updating current displayed user
-  const nextUser = () => {
-    //if queue length < 5, run the query function and update the state
-    if (userQueue.length < 5) {
-      try {
-        pageNumber++;
-        getUsers({ variables: { page: pageNumber } });
-        updateUserQueue([...userQueue, ...data]);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    //queue starts at index 0 of userQueue
-    //set variable to the first user
-    let userToDisplay = userQueue[0];
-    //set the state of displayed user to variable
-    updateDisplay(userToDisplay);
-    //update the state of the queue without the user
-    updateUserQueue(userQueue.slice(1));
   };
 
   return (
@@ -101,12 +80,10 @@ const Feed = () => {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant='h5' component='h2'>
-            {displayedUser.firstName}
+            {displayedUser?.firstName || 'TestName'}
           </Typography>
-          <Typography>{displayedUser.description}</Typography>
-        </CardContent>
-        <CardActions>
-          {/* these buttons will run a update function */}
+          <Typography>{displayedUser?.description || 'TestDesc'}</Typography>
+          <Typography>{displayedUser?.tags || 'TestTags'}</Typography>
           <Button
             size='small'
             color='primary'
@@ -121,7 +98,8 @@ const Feed = () => {
           >
             Connect
           </Button>
-        </CardActions>
+        </CardContent>
+        <CardActions></CardActions>
       </Card>
     </main>
   );
