@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      backgroundColor: "#393E41",
+      color: "#F6F7EB"
     },
 
     marginer: {
@@ -45,7 +47,7 @@ const Landing = () => {
         Login
       </Button>
       <Button
-        variant="contained"
+        variant="outlined"
         color="primary"
         classes={{ root: classes.marginer }}
         component={Link}
