@@ -55,13 +55,8 @@ const Profile = () => {
   if (error) {
     console.log(`Error! ${error.message}`);
   }
-  console.log('Raw server data: ');
-  console.log(data);
 
   const user = data?.me || data?.user || {};
-
-  console.log('after optional chaining & before state set: ');
-  console.log(user);
 
   useEffect(() => {
     setDisplay({ ...user });
@@ -96,8 +91,6 @@ const Profile = () => {
 
   return (
     <Container component='main' maxWidth='xs'>
-      {console.log('After state set, inside render: ')}
-      {console.log(shownUser)}
       <CssBaseline />
       {/* showing which user you are viewing */}
       <div className={classes.paper}>
