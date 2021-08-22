@@ -53,7 +53,9 @@ const Header = () => {
           </Typography>
           {Auth.loggedIn() && (
             <>
-              <Button color="inherit">Profile</Button>
+              <Button color="inherit" component={Link} to={"/profile"}>
+                Profile
+              </Button>
               <Button color="inherit" onClick={logout}>
                 <a href="/">Logout</a>
               </Button>
