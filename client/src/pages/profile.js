@@ -40,7 +40,6 @@ const Profile = () => {
 
   console.log(id);
 
-  //State
   const [shownUser, setDisplay] = useState({});
 
   // adds user to connection
@@ -82,7 +81,7 @@ const Profile = () => {
   const handleClick = async () => {
     try {
       await addConnection({
-        variables: { id: user._id },
+        variables: { id: shownUser._id },
       });
     } catch (e) {
       console.error(e);
@@ -128,12 +127,12 @@ const Profile = () => {
         {/* )} */}
       </div>
 
-      {/* non-functional  */}
+      {/* functional, not styked shows up as small bars */}
       <div className={classes.paper}>
         <Connections
-          username={user.firstname}
-          connectionCount={user.connectionCount}
-          connections={user.connections}
+          username={shownUser.firstname}
+          connectionCount={shownUser.connectionCount}
+          connections={shownUser.connections}
         />
       </div>
     </Container>
