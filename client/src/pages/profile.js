@@ -69,14 +69,14 @@ const Profile = () => {
     return <div>Loading Page...</div>;
   }
 
-  // handles login verification
-  //   if (!user?.username) {
-  //     return (
-  //       <h4>
-  //         You need to be logged in to see this
-  //       </h4>
-  //     );
-  //   }
+  // error handling login verification
+    if (!user?._id) {
+      return (
+        <h4>
+          You need to be logged in to see this
+        </h4>
+      );
+    }
 
   const handleClick = async () => {
     try {
