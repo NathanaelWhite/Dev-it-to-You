@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
   const user = data?.me || data?.user || {};
 
-  // redirect to personal profile page if username is yours
+  // redirect to personal profile page if own user
   if (Auth.loggedIn() && Auth.getProfile().data.firstname === userParam) {
     return <Redirect to="/profile" />;
   }
