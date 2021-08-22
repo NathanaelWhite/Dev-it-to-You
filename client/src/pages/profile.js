@@ -14,12 +14,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import FingerprintIcon from "@material-ui/icons/Fingerprint";
+// will be used if no profile picture
+// import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 
 const Profile = () => {
-
-   
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   const user = data?.me || data?.user || {};
 
   // redirect to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+  if (Auth.loggedIn() && Auth.getProfile().data.firstname === userParam) {
     return <Redirect to="/profile" />;
   }
 
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
      {/* showing which user you are viewing */}
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-        Viewing {userParam ? `${user.username}'s` : "your"} profile.
+        Viewing {userParam ? `${user.firstname}'s` : "your"} profile.
         </Typography>
         {/* profile image */}
         <div id='profileimg' className={classes.paper}>
@@ -101,11 +101,14 @@ const useStyles = makeStyles((theme) => ({
         <Typography>{shownUser?.description || 'bio'}
         </Typography>
         {/* users tags */}
-        <Typography>{shownUser?.tags || 'tags'}
+        <Typography>
+        <FingerprintIcon />
+            {shownUser?.tags || 'tags'}
         </Typography>
         
        
-        {userParam && ( 
+       {/* will only be functional if not personal page */}
+        {/* {userParam && (  */}
         <Button
             type="submit"
             fullWidth
@@ -116,12 +119,13 @@ const useStyles = makeStyles((theme) => ({
           >
             Add Connection
           </Button>
-        )}
+        {/* )} */}
       </div>
 
+                {/* non-functional  */}
         <div className={classes.paper}>
           <Connections
-            username={user.username}
+            username={user.firstname}
             connectionCount={user.connectionCount}
             connections={user.connections}
           />
