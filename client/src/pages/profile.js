@@ -72,9 +72,9 @@ const Profile = () => {
   // error handling login verification
     if (!user?._id) {
       return (
-        <h4>
+        <Typography>
           You need to be logged in to see this
-        </h4>
+        </Typography>
       );
     }
 
