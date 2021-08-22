@@ -112,10 +112,18 @@ const Profile = () => {
           {shownUser?.tags || "tags"}
         </Typography>
 
+        {/* if connected, shows your connections email address on their page */}
+        {/* currently will show email address even if not connected */}
+        {data?.user &&  (
+            <Typography>
+              {shownUser?._id || "emailAddress"}
+            </Typography>
+        )} 
+
         {/* running case where if on own profile, can edit, 
       if on someone elses can add connection */}
         
-         {data?.user && (
+         {data?.user &&  (
         <Button
           type="submit"
           fullWidth
@@ -144,8 +152,8 @@ const Profile = () => {
     )}
        
 
-        {/* functional, not styled shows up as small bars */}
-        <div className={classes.paper}>
+        {/* functional, does not show count or names */}
+        <div className={classes.card}>
           <Connections
             username={shownUser.firstname}
             connectionCount={shownUser.connectionCount}
