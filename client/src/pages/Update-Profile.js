@@ -17,7 +17,6 @@ import Container from "@material-ui/core/Container";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_USER } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
-import Auth from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,10 +64,60 @@ export default function UpdateProfile() {
   ];
 
   const { loading, data } = useQuery(QUERY_ME);
-  console.log(data);
-  const user = data?.me;
+  const user = data?.me || {};
 
-  const [userEmail, setUserEmail] = useState(user.email);
+  const [updateUser] = useMutation(UPDATE_USER);
+
+  const [userForm, setUserForm] = useState({
+    firstName: "",
+    lastName: "",
+    description: "",
+    tags: "",
+  });
+
+  const [userSkills, setUserSkills] = useState([]);
+
+  const [firstNameErr, setFirstNameErr] = useState(false);
+  const [lastNameErr, setLastNameErr] = useState(false);
+  const [buttonAble, setButtonAble] = useState(true);
+
+  useEffect(() => {
+    setUserForm({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      description: user.description,
+      tags: user.tags,
+    });
+  }, [user]);
+
+  useEffect(() => {
+    let skillArrObj = [];
+    if (user.tags) {
+      let oldSkills = user.tags.split(" ");
+      for (let i = 0; i < skills.length; i++) {
+        let check = false;
+        for (let ii = 0; ii < oldSkills.length; ii++) {
+          if (skills[i].replace(" ", "").toLowerCase() === oldSkills[ii]) {
+            check = true;
+          }
+        }
+        skillArrObj.push({
+          name: skills[i].replace(" ", "").toLowerCase(),
+          check: check,
+        });
+      }
+    }
+
+    setUserSkills(skillArrObj);
+  }, [user]);
+
+  useEffect(() => {
+    if (!firstNameErr && !lastNameErr) {
+      setButtonAble(false);
+    } else {
+      setButtonAble(true);
+    }
+  }, [firstNameErr, lastNameErr]);
 
   if (loading) {
     return <Typography>Loading...</Typography>;
@@ -82,19 +131,87 @@ export default function UpdateProfile() {
     );
   }
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleSkillChange = (e) => {};
+    switch (name) {
+      case "firstName":
+        if (value) {
+          setFirstNameErr(false);
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+          setFirstNameErr(true);
+        }
+        break;
+      case "lastName":
+        if (value) {
+          setLastNameErr(false);
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+        } else {
+          setUserForm({
+            ...userForm,
+            [name]: value,
+          });
+          setLastNameErr(true);
+        }
+        break;
+      case "description":
+        setUserForm({
+          ...userForm,
+          [name]: value,
+        });
 
-  const handleSubmit = async (e) => {};
+        break;
+    }
+  };
 
-  console.log(user);
+  const handleSkillChange = (e) => {
+    const { id } = e.target;
+
+    let current = [...userSkills];
+    current[id].check = !current[id].check;
+
+    setUserSkills(current);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let chosenSkills = "";
+    for (let i = 0; i < userSkills.length; i++) {
+      if (userSkills[i].check) {
+        chosenSkills = chosenSkills.concat(" ", userSkills[i].name);
+      }
+    }
+
+    try {
+      const { data } = await updateUser({
+        variables: {
+          ...userForm,
+          tags: chosenSkills.trim(),
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {`${user.firstName} ${user.lastName}`}
+          Edit Your Profile
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -103,37 +220,13 @@ export default function UpdateProfile() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={handleChange}
-                value={userEmail}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required={true}
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
+                error={firstNameErr}
                 id="firstName"
                 label="First Name"
                 name="firstName"
                 autoComplete="given-name"
                 onChange={handleChange}
+                value={userForm.firstName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -141,11 +234,13 @@ export default function UpdateProfile() {
                 variant="outlined"
                 required
                 fullWidth
+                error={lastNameErr}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
                 onChange={handleChange}
+                value={userForm.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -157,25 +252,26 @@ export default function UpdateProfile() {
                 name="description"
                 label="Enter a description of yourself..."
                 onChange={handleChange}
+                value={userForm.description}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend">Skills</FormLabel>
                 <FormGroup>
-                  {skills.map((item, i) => {
+                  {userSkills.map((item, i) => {
                     return (
                       <FormControlLabel
                         key={i}
                         control={
                           <Checkbox
-                            name={item.replace(" ", "").toLowerCase()}
-                            onChange={(e) => {
-                              handleSkillChange(e);
-                            }}
+                            id={i}
+                            name={item.name}
+                            checked={item.check}
+                            onClick={handleSkillChange}
                           />
                         }
-                        label={item}
+                        label={skills[i]}
                       />
                     );
                   })}
@@ -189,16 +285,10 @@ export default function UpdateProfile() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={buttonAble}
           >
-            Sign Up
+            Update
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}></Box>
