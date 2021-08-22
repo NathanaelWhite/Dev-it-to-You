@@ -1,6 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import {
+  createTheme,
+  makeStyles,
+  ThemeProvider,
+} from "@material-ui/core/styles";
 import {
   ApolloClient,
   InMemoryCache,
@@ -17,8 +21,6 @@ import SignUp from "./pages/signup-form";
 import Login from "./pages/login";
 import Feed from "./pages/Feed";
 import Profile from "./pages/profile";
-
-import UpdateProfile from "./pages/Update-Profile";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -39,17 +41,34 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// const theme = createTheme({
-//   palette: {
-//     primary: "E94F37",
-//   },
-//   spacing: 8,
-// });
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#E94F37",
+    },
+    secondary: {
+      main: "#F5F100",
+    },
+    background: {
+      paper: "#393E41",
+      default: "#393E41",
+    },
+    text: {
+      primary: "#F6F7EB",
+    },
+    info: {
+      light: "#64b5f6",
+      main: "#2196f3",
+      dark: "#1976d2",
+      contrastText: "#fff",
+    },
+  },
+});
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Router>
           <Header />
           <Switch>
@@ -58,7 +77,6 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile/:id?" component={Profile} />
             <Route exact path="/feed" component={Feed} />
-            <Route exact path="/update" component={UpdateProfile} />
           </Switch>
           <Footer />
         </Router>
