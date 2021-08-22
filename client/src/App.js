@@ -49,25 +49,37 @@ const theme = createTheme({
     secondary: {
       main: "#F5F100",
     },
+    background: {
+      paper: "#393E41",
+      default: "#393E41",
+    },
+    text: {
+      primary: "#F6F7EB",
+    },
+    info: {
+      light: "#64b5f6",
+      main: "#2196f3",
+      dark: "#1976d2",
+      contrastText: "#fff",
+    },
   },
 });
 
 function App() {
-
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-          <Router>
-            <Header />
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/profile/:id?" component={Profile} />
-              <Route exact path="/feed" component={Feed} />
-            </Switch>
-            <Footer />
-          </Router>
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/profile/:id?" component={Profile} />
+            <Route exact path="/feed" component={Feed} />
+          </Switch>
+          <Footer />
+        </Router>
       </ThemeProvider>
     </ApolloProvider>
   );
