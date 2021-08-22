@@ -83,6 +83,7 @@ const Feed = () => {
             {displayedUser?.firstName || 'TestName'}
           </Typography>
           <Typography>{displayedUser?.description || 'TestDesc'}</Typography>
+          <Typography>{displayedUser?.tags || 'TestTags'}</Typography>
           <Button
             size='small'
             color='primary'
