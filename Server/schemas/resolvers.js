@@ -15,8 +15,8 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    user: async (parent, { email }) => {
-      return User.findOne({ email }).select('-__v -password');
+    user: async (parent, { _id }) => {
+      return User.findOne({ _id }).select('-__v -password');
     },
     allUsers: async () => {
       const usersData = await User.find();
