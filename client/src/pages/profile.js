@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
   const classes = useStyles();
 
   const { username: userParam } = useParams();
+  //State
+  const [shownUser, setDisplay] = useState({});
  
   // adds user to connection
   const [addConnection] = useMutation(ADD_CONNECTION);
@@ -82,20 +84,25 @@ const useStyles = makeStyles((theme) => ({
   return (
     <Container component="main" maxWidth="xs">
         <CssBaseline />
-   
+     {/* showing which user you are viewing */}
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
         Viewing {userParam ? `${user.username}'s` : "your"} profile.
         </Typography>
-        
+        {/* profile image */}
         <div id='profileimg' className={classes.paper}>
           <img src="" alt='profileimg' className={classes.imgStyles} />
         </div>
-
+            {/* users first name */}
         <Typography component="h1" variant="h5">
-        Hello, My name is  {userParam ? `${user.me.firstname}'s` : "firstname" } 
+        {shownUser?.firstName || 'FirstName'} 
         </Typography>
-        
+         {/* description of user */}
+        <Typography>{shownUser?.description || 'bio'}
+        </Typography>
+        {/* users tags */}
+        <Typography>{shownUser?.tags || 'tags'}
+        </Typography>
         
        
         {userParam && ( 
