@@ -38,7 +38,7 @@ const Feed = () => {
 
   //Queries & Mutations
   const { loading, data } = useQuery(QUERY_USERS);
-  const [addConnection] = useMutation(ADD_CONNECTION);
+  const [addConnection, { error }] = useMutation(ADD_CONNECTION);
 
   //Query data
   const userData = data?.allUsers || [];
@@ -58,14 +58,14 @@ const Feed = () => {
   const handleInteraction = (event) => {
     if (event === 'connect') {
       try {
-        // addConnection({
-        //   connectionId: displayedUser._id,
-        // });
-        let userIndex = userData.indexOf(displayedUser);
-        setDisplay(userData[userIndex + 1]);
-      } catch (e) {
-        console.error(e);
+        addConnection({
+          variables: { id: displayedUser._id },
+        });
+      } catch (error) {
+        console.error(error);
       }
+      let userIndex = userData.indexOf(displayedUser);
+      setDisplay(userData[userIndex + 1]);
     } else if (event === 'pass') {
       let userIndex = userData.indexOf(displayedUser);
       setDisplay(userData[userIndex + 1]);

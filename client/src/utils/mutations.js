@@ -72,20 +72,18 @@ export const UPDATE_USER = gql`
 `;
 
 export const ADD_CONNECTION = gql`
-  mutation addConnection($connectionId: ID!) {
-    addConnection(connectionId: $connectionId) {
-      user {
+  mutation addConnection($id: ID!) {
+    addConnection(connectionId: $id) {
+      _id
+      firstName
+      lastName
+      email
+      description
+      tags
+      connections {
         _id
         firstName
         lastName
-        email
-        description
-        tags
-        connections {
-          _id
-          firstName
-          lastName
-        }
       }
     }
   }
