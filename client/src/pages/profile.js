@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, Link } from "react-router-dom";
 
 import Connections from "../components/connections";
 
@@ -114,35 +114,35 @@ const Profile = () => {
 
         {/* running case where if on own profile, can edit, 
       if on someone elses can add connection */}
-        
-         {data?.user && (
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleClick}
-        >
-          Add Connection
-        </Button>
-        )} 
 
-          
+        {data?.user && (
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleClick}
+          >
+            Add Connection
+          </Button>
+        )}
+
         {/* edit button for updating personal profile */}
         {data?.me && (
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleClick}
-        >
-          edit profile
-        </Button>
-    )}
-       
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleClick}
+            component={Link}
+            to={"/update"}
+          >
+            edit profile
+          </Button>
+        )}
 
         {/* functional, not styled shows up as small bars */}
         <div className={classes.paper}>
