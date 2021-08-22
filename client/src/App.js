@@ -16,6 +16,8 @@ import Landing from "./pages/Landing";
 import SignUp from "./pages/signup-form";
 import Login from "./pages/login";
 
+import UpdateProfile from "./pages/Update-Profile";
+
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
@@ -52,6 +54,7 @@ function App() {
             <Route exact path="/" component={Landing} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/update" component={UpdateProfile} />
           </Switch>
           <Footer />
         </Router>
