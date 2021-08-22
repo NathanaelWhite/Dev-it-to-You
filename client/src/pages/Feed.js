@@ -23,6 +23,7 @@ const Feed = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: "#393E41", 
     },
     card: {
       height: '100%',
