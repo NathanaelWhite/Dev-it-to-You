@@ -85,3 +85,21 @@ export const ADD_CONNECTION = gql`
     }
   }
 `;
+
+export const REMOVE_CONNECTION = gql`
+  mutation removeConnection($id: ID!) {
+    removeConnection(connectionId: $id) {
+      _id
+      firstName
+      lastName
+      email
+      description
+      tags
+      connections {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;

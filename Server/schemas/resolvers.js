@@ -21,8 +21,18 @@ const resolvers = {
         .populate('connections');
     },
     allUsers: async (_, args, context) => {
+      const currentUser = await User.findOne({ _id: context.user._id }).select(
+        'connections'
+      );
+      const connectionsArry = currentUser.connections.map((user) => {
+        return user._id;
+      });
+
       const usersData = await User.find({
-        $and: [{ _id: { $ne: context.user._id } }],
+        $and: [
+          { _id: { $ne: context.user._id } },
+          { _id: { $nin: connectionsArry } },
+        ],
       }).populate('connections');
       return usersData;
     },
@@ -61,6 +71,19 @@ const resolvers = {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { connections: connectionId } },
+          { new: true }
+        ).populate('connections');
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeConnection: async (parent, { connectionId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { connections: connectionId } },
           { new: true }
         ).populate('connections');
 
