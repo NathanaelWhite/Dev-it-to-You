@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { ADD_CONNECTION } from '../utils/mutations';
 import { QUERY_USERS } from '../utils/queries';
+import Auth from '../utils/auth';
+import { Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -46,6 +48,10 @@ const Feed = () => {
 
   //handle initial render
   useEffect(() => {
+    // if (!Auth.loggedIn()) {
+    //   <Redirect push to='/' />;
+    // }
+
     setDisplay(userData[0]);
   }, [userData]);
 

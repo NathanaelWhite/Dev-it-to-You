@@ -6,9 +6,9 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select(
-          '-__v -password'
-        );
+        const userData = await User.findOne({ _id: context.user._id })
+          .select('-__v -password')
+          .populate('connections');
 
         return userData;
       }
@@ -16,10 +16,14 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     user: async (parent, { _id }) => {
-      return User.findOne({ _id }).select('-__v -password');
+      return User.findOne({ _id })
+        .select('-__v -password')
+        .populate('connections');
     },
-    allUsers: async () => {
-      const usersData = await User.find();
+    allUsers: async (_, args, context) => {
+      const usersData = await User.find({
+        $and: [{ _id: { $ne: context.user._id } }],
+      }).populate('connections');
       return usersData;
     },
   },
