@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Logo from "../components/Logo";
 
 
 const useStyles = makeStyles((theme) => {
@@ -31,6 +32,7 @@ const Landing = () => {
 
   return (
     <main className={classes.root}>
+      <Logo />
       <Typography variant="h1" classes={{ root: classes.marginer }}>
         Dev Me Up
       </Typography>
