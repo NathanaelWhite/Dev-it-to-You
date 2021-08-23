@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/images/dmu-logo-yellow.svg.svg";
-import "./Logo.css" 
+import "./style.css" 
 
 const Logo = () => {
   return (
@@ -11,3 +11,4 @@ const Logo = () => {
 };
 
 export default Logo;
+
