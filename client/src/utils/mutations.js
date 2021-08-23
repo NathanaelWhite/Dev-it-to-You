@@ -58,15 +58,12 @@ export const UPDATE_USER = gql`
       description: $description
       tags: $tags
     ) {
-      token
-      user {
-        _id
-        firstName
-        lastName
-        email
-        description
-        tags
-      }
+      _id
+      firstName
+      lastName
+      email
+      description
+      tags
     }
   }
 `;
