@@ -1,0 +1,218 @@
+.logo {
+    height: auto;
+    width: auto;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media screen and (max-width : 320px) and (max-device-width : 480px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Smartphones (landscape) ----------- */
+    @media screen and (min-width : 321px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Smartphones (portrait) ----------- */
+    @media screen and (max-width : 320px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPads (portrait and landscape) ----------- */
+    @media screen and (max-width : 768px) and (max-device-width : 1024px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPads (landscape) ----------- */
+    @media screen and (max-width : 768px) and (max-device-width : 1024px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPads (portrait) ----------- */
+    @media screen and (max-width : 768px) and (max-device-width : 1024px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    /**********
+    iPad 3
+    **********/
+    @media screen and (max-width : 768px) and (max-device-width : 1024px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width : 768px) and (max-device-width : 1024px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    /* Desktops and laptops ----------- */
+    @media screen  and (min-width : 1224px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Large screens ----------- */
+    @media screen  and (min-width : 1824px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone 4 ----------- */
+    @media screen and (max-width : 320px) and (max-device-width : 480px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width : 320px) and (max-device-width : 480px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone 5 ----------- */
+    @media screen and (max-width: 320px) and (max-device-height: 568px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 320px) and (max-device-height: 568px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone 6, 7, 8 ----------- */
+    @media screen and (max-width: 375px) and (max-device-height: 667px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 375px) and (max-device-height: 667px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone 6+, 7+, 8+ ----------- */
+    @media screen and (max-width: 414px) and (max-device-height: 736px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 414px) and (max-device-height: 736px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone X ----------- */
+    @media screen and (max-width: 375px) and (max-device-height: 812px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 375px) and (max-device-height: 812px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* iPhone XS Max, XR ----------- */
+    @media screen and (max-width: 414px) and (max-device-height: 896px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 414px) and (max-device-height: 896px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Samsung Galaxy S3 ----------- */
+    @media screen and (max-width: 320px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 320px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Samsung Galaxy S4 ----------- */
+    @media screen and (max-width: 320px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 320px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    /* Samsung Galaxy S5 ----------- */
+    @media screen and (max-width: 360px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }
+    
+    @media screen and (max-width: 360px) and (max-device-height: 640px) {
+        .logo {
+            width: auto;
+            height: auto;
+        }
+    }

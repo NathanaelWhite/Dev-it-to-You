@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Logo from "../Logo";
 
 import Auth from "../../utils/auth";
 
@@ -49,10 +50,13 @@ const Header = () => {
         <Toolbar>
           <image />
           <Typography variant="h6" className={classes.title}>
-            <Link to="/">Dev Me Up</Link>
+            <Link to={Auth.loggedIn() ? "/feed" : "/"}>Dev Me Up</Link>
           </Typography>
           {Auth.loggedIn() && (
             <>
+              <Button color="inherit" component={Link} to={"/feed"}>
+                Feed
+              </Button>
               <Button color="inherit" component={Link} to={"/profile"}>
                 Profile
               </Button>

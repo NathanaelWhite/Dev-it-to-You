@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { ADD_CONNECTION } from '../utils/mutations';
-import { QUERY_USERS } from '../utils/queries';
-import Auth from '../utils/auth';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { ADD_CONNECTION } from "../utils/mutations";
+import { QUERY_USERS } from "../utils/queries";
+import Auth from "../utils/auth";
+import { Redirect } from "react-router-dom";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 
 const Feed = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      textAlign: 'center',
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: "#393E41", 
+      textAlign: "center",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#393E41",
     },
     card: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
     },
     cardContent: {
       flexGrow: 1,
@@ -63,7 +64,7 @@ const Feed = () => {
   //wrapper function for interactions
   //possible interactions: connect or pass
   const handleInteraction = (event) => {
-    if (event === 'connect') {
+    if (event === "connect") {
       try {
         addConnection({
           variables: { id: displayedUser._id },
@@ -73,11 +74,11 @@ const Feed = () => {
       }
       let userIndex = userData.indexOf(displayedUser);
       setDisplay(userData[userIndex + 1]);
-    } else if (event === 'pass') {
+    } else if (event === "pass") {
       let userIndex = userData.indexOf(displayedUser);
       setDisplay(userData[userIndex + 1]);
     } else {
-      return console.log('error');
+      return console.log("error");
     }
     //if select, create a user modal? to display more info?
   };
@@ -86,24 +87,32 @@ const Feed = () => {
     <main className={classes.root}>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {displayedUser?.firstName || 'TestName'}
+          <Typography gutterBottom variant="h5" component="h2">
+            {displayedUser?.firstName || "TestName"}
           </Typography>
-          <Typography>{displayedUser?.description || 'TestDesc'}</Typography>
-          <Typography>{displayedUser?.tags || 'TestTags'}</Typography>
+          <Typography>{displayedUser?.description || "TestDesc"}</Typography>
+          <Typography>{displayedUser?.tags || "TestTags"}</Typography>
           <Button
-            size='small'
-            color='primary'
-            onClick={() => handleInteraction('pass')}
+            size="small"
+            color="primary"
+            onClick={() => handleInteraction("pass")}
           >
             Pass
           </Button>
           <Button
-            size='small'
-            color='primary'
-            onClick={() => handleInteraction('connect')}
+            size="small"
+            color="primary"
+            onClick={() => handleInteraction("connect")}
           >
             Connect
+          </Button>
+          <Button
+            size="small"
+            color="primary"
+            component={Link}
+            to={`/profile/${displayedUser?._id}`}
+          >
+            View
           </Button>
         </CardContent>
         <CardActions></CardActions>
