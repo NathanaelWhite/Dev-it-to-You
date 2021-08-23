@@ -49,10 +49,13 @@ const Header = () => {
         <Toolbar>
           <image />
           <Typography variant="h6" className={classes.title}>
-            <Link to="/">Dev Me Up</Link>
+            <Link to={Auth.loggedIn() ? "/feed" : "/"}>Dev Me Up</Link>
           </Typography>
           {Auth.loggedIn() && (
             <>
+              <Button color="inherit" component={Link} to={"/feed"}>
+                Feed
+              </Button>
               <Button color="inherit" component={Link} to={"/profile"}>
                 Profile
               </Button>

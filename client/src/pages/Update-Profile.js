@@ -200,6 +200,8 @@ export default function UpdateProfile() {
           tags: chosenSkills.trim(),
         },
       });
+
+      window.location.assign("/profile");
     } catch (err) {
       console.error(err);
     }
