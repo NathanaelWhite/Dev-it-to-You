@@ -18,7 +18,7 @@ const ConnectionList = ({ Connections, title }) => {
                     style={{ fontWeight: 700 }}
                     className="text-light"
                   >
-                    {connection._id}
+                    {connection.firstname}
                   </Link>{' '}
                   Connection created on {connection.createdAt}
                 </p>

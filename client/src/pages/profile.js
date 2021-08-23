@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect, useParams, Link } from "react-router-dom";
 
 import Connections from "../components/connections";
+// import ConnectionList from "../components/connectionsList";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
@@ -122,7 +123,7 @@ const Profile = () => {
   return (
     <Container component="main" maxWidth="xs" alignItems="center">
       <CssBaseline />
-      {/* showing which user you are viewing */}
+      
       <div elevation={0} className={classes.root}>
         <Grid container spacing={6} alignItems="center">
           <div id="user">
@@ -141,6 +142,7 @@ const Profile = () => {
           <img src="" alt="profile-img" className={classes.imgStyles} />
         </div> */}
 
+{/* showing which user you are viewing */}
           <Box textAlign="center">
             <Typography component="h1" variant="h5">
               Viewing {id ? `${shownUser?.firstName}'s` : "your"} profile.
@@ -153,6 +155,7 @@ const Profile = () => {
          name: {shownUser?.firstName || "FirstName"}
         </Typography>
         </Grid> */}
+
           {/* description of user */}
           <Box fontStyle="italic" lineHeight={5}>
             About: {shownUser?.description || "bio"}
@@ -160,6 +163,7 @@ const Profile = () => {
           {/* <Grid item xs={12}>
             <Typography>About: {shownUser?.description || "bio"}</Typography>
           </Grid> */}
+
           {/* users tags */}
           <Grid item xs={12}>
             <Typography>
@@ -167,6 +171,7 @@ const Profile = () => {
               Skills: {shownUser?.tags || "tags"}
             </Typography>
           </Grid>
+
           {/* if connected, shows your connections email address on their page */}
           {/* currently will show email address even if not connected */}
           <Grid item md={12} sm={12} xs={12}>
@@ -202,6 +207,14 @@ const Profile = () => {
               connections={shownUser.connections}
             />
           </div>
+
+          {/* working on adding ConnectionList */}
+        {/* <div className="col-12 mb-3 col-lg-8">
+          <ConnectionList
+            connections={user.connections}
+            title={`${user.firstname}'s thoughts...`}
+          />
+        </div> */}
 
           {/* edit button for updating personal profile */}
           {data?.me && (

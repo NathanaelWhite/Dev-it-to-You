@@ -14,7 +14,7 @@ const Connections = ({ connectionCount, firstname, connections }) => {
       </h5>
       {connections.map(connection => (
         <button className="btn w-100 display-block mb-2" key={connection._id}>
-          <Link to={`/profile/${connection._id}`}>{connection._id}</Link>
+          <Link to={`/profile/${connection._id}`}>{connection.email}</Link>
         </button>
       ))}
     </div>
