@@ -11,19 +11,29 @@ import Auth from "../utils/auth";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import FingerprintIcon from "@material-ui/icons/Fingerprint";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
 // will be used if no profile picture
-// import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 const Profile = () => {
   const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(8),
+      marginTop: theme.spacing(14),
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.primary.main,
+      alignItems: "center",
+      display: 'flex',
+      flexWrap: 'wrap',
     },
     form: {
       width: "100%",
@@ -89,35 +99,50 @@ const Profile = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" alignItems="center">
       <CssBaseline />
       {/* showing which user you are viewing */}
       <div className={classes.paper}>
+      <Grid container spacing={6} alignItems="center">
+      <Box textAlign="center">
         <Typography component="h1" variant="h5">
           Viewing {id ? `${shownUser?.firstName}'s` : "your"} profile.
         </Typography>
+        </Box >
+        <Avatar className={classes.avatar}>
+          <AccountBoxIcon fontSize="large" />
+        
         {/* profile image */}
-        <div id="profileimg" className={classes.paper}>
+        {/* <div id="profileimg" className={classes.paper}>
           <img src="" alt="profile-img" className={classes.imgStyles} />
-        </div>
+        </div> */}
+        </Avatar>
         {/* users first name */}
+        <Grid item xs={12}>
         <Typography component="h1" variant="h5">
-          {shownUser?.firstName || "FirstName"}
+         name: {shownUser?.firstName || "FirstName"}
         </Typography>
+        </Grid>
         {/* description of user */}
-        <Typography>{shownUser?.description || "bio"}</Typography>
+        <Grid item xs={12}>
+        <Typography>About: {shownUser?.description || "bio"}</Typography>
+        </Grid>
         {/* users tags */}
+        <Grid item xs={12}>
         <Typography>
+          
           <FingerprintIcon />
-          {shownUser?.tags || "tags"}
+          Skills: {shownUser?.tags || "tags"}
         </Typography>
-
+        </Grid>
         {/* if connected, shows your connections email address on their page */}
         {/* currently will show email address even if not connected */}
         {data?.user &&  (
+          <Grid item xs={12}>
             <Typography>
               {shownUser?._id || "emailAddress"}
             </Typography>
+            </Grid>
         )} 
 
         {/* running case where if on own profile, can edit, 
@@ -136,6 +161,18 @@ const Profile = () => {
         </Button>
         )} 
 
+        
+       
+
+        {/* functional, does not show count or names */}
+        <div className={classes.card}>
+          <Connections
+            username={shownUser.firstname}
+            connectionCount={shownUser.connectionCount}
+            connections={shownUser.connections}
+          />
+        </div>
+
           
         {/* edit button for updating personal profile */}
         {data?.me && (
@@ -150,16 +187,7 @@ const Profile = () => {
           edit profile
         </Button>
     )}
-       
-
-        {/* functional, does not show count or names */}
-        <div className={classes.card}>
-          <Connections
-            username={shownUser.firstname}
-            connectionCount={shownUser.connectionCount}
-            connections={shownUser.connections}
-          />
-        </div>
+        </Grid>
       </div>
     </Container>
   );

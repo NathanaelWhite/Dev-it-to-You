@@ -9,7 +9,7 @@ const Connections = ({ connectionCount, firstname, connections }) => {
 
   return (
     <div>
-      <h5>
+      <h5 >
         your {connectionCount} {connectionCount === 1 ? 'connect' : 'connections'}
       </h5>
       {connections.map(connection => (
