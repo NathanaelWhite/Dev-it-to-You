@@ -226,6 +226,8 @@ const Profile = () => {
               color="primary"
               className={classes.submit}
               onClick={handleClick}
+              component={Link}
+              to={"/update"}
             >
               edit profile
             </Button>

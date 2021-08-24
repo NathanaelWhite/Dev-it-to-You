@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
@@ -38,6 +38,7 @@ const typeDefs = gql`
       tags: String
     ): User
     addConnection(connectionId: ID!): User
+    removeConnection(connectionId: ID!): User
   }
 `;
 
