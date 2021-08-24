@@ -160,7 +160,7 @@ const Profile = () => {
           </Grid>
 
           {/* description of user */}
-          <Box fontStyle="italic" lineHeight={5}>
+          <Box  >
             About: {shownUser?.description || "bio"}
           </Box>
           {/* <Grid item xs={12}>
@@ -168,7 +168,7 @@ const Profile = () => {
           </Grid> */}
 
           {/* users tags */}
-          <Grid item xs={12}>
+          <Grid >
             <Typography>
               <FingerprintIcon />
               Skills: {shownUser?.tags || "tags"}
@@ -214,9 +214,9 @@ const Profile = () => {
           )}
 
           {/* functional, does not show count or names */}
-          <div className={classes.card}>
+          <div className={classes.paper}>
             <Connections
-              username={shownUser.firstname}
+              username={shownUser.firstName}
               connectionCount={shownUser.connectionCount}
               connections={shownUser.connections}
             />
@@ -230,7 +230,6 @@ const Profile = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleClick}
               component={Link}
               to={"/update"}
             >
