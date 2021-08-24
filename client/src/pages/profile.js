@@ -33,9 +33,9 @@ const Profile = () => {
       justifyContent: "center",
       backgroundColor: "#393E41",
       color: "#F6F7EB",
-      "& div#user": {
-        backgroundColor: "#F6F7EB",
-      },
+      // "& div#user": {
+      //   backgroundColor: "#F6F7EB",
+      // },
     },
 
     paper: {
@@ -53,11 +53,12 @@ const Profile = () => {
     // },
     avatar: {
       margin: theme.spacing(20),
-      width: "200px",
+      width: "150px",
       height: "150px",
-      borderRadius: "40%",
+      borderRadius: "20%",
+      
       // position: "relative",
-      top: "230px",
+      top: "auto",
       color: theme.palette.primary.main,
       backgroundColor: theme.palette.secondary.main,
     },
