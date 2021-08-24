@@ -123,7 +123,7 @@ const Profile = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" alignItems="center">
+    <Container  maxWidth="xs" >
       <CssBaseline />
 
       <div elevation={0} className={classes.root}>
@@ -145,7 +145,7 @@ const Profile = () => {
         </div> */}
 
           {/* showing which user you are viewing */}
-          <Box textAlign="center" >
+          <Box textAlign="center">
             <Typography component="h1" variant="h5">
               Viewing {id ? `${shownUser?.firstName}'s` : "your"} profile.
             </Typography>
@@ -160,15 +160,13 @@ const Profile = () => {
           </Grid>
 
           {/* description of user */}
-          <Box  >
-            About: {shownUser?.description || "bio"}
-          </Box>
+          <Box>About: {shownUser?.description || "bio"}</Box>
           {/* <Grid item xs={12}>
             <Typography>About: {shownUser?.description || "bio"}</Typography>
           </Grid> */}
 
           {/* users tags */}
-          <Grid >
+          <Grid>
             <Typography>
               <FingerprintIcon />
               Skills: {shownUser?.tags || "tags"}
@@ -186,8 +184,8 @@ const Profile = () => {
           </Grid>
           {/* )} */}
 
-         {/* adds connection to user */}
-          {data?.user && (
+          {/* adds connection to user */}
+          {data?.user &&  (
             <Button
               type="submit"
               fullWidth
@@ -199,7 +197,7 @@ const Profile = () => {
               Add Connection
             </Button>
           )}
-            {/* removes connection to user */}
+          {/* removes connection to user */}
           {data?.user && (
             <Button
               type="submit"
