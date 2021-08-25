@@ -1,4 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
+const { connections } = require('mongoose');
 const { User, Tags } = require('../models');
 const { signToken } = require('../utils/auth');
 
@@ -9,6 +10,17 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
           .populate('connections');
+
+        // const connectionsArry = userData.connections.map((user) => {
+        //   return user._id;
+        // });
+        // const connectedUsers = await User.find({
+        //   $and: [
+        //     { _id: { $in: connectionsArry } },
+        //     { connections: { _id: context.user._id } },
+        //   ],
+        // }).populate('connections');
+        // console.log(connectedUsers);
 
         return userData;
       }
