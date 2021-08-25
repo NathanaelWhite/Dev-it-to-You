@@ -37,7 +37,7 @@ const Landing = () => {
         Dev Me Up
       </Typography>
       <Typography variant="body1" classes={{ root: classes.marginer }}>
-        Let'd find some developers and make a project out of this world!
+        Let's find some developers and make a project out of this world!
       </Typography>
       <Button
         variant="contained"
