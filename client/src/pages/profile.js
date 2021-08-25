@@ -58,6 +58,7 @@ const Profile = () => {
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      marginBottom: theme.spacing(14)
     },
   }));
 
