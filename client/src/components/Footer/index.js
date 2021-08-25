@@ -8,16 +8,22 @@ const useStyles = makeStyles({
     width: "100%",
     position: "fixed",
     bottom: 0,
+    height: "100px"
   },
+  space: {
+    margin: "0 auto 100px",
+  }
 });
 
 const Footer = () => {
   const classes = useStyles();
 
   return (
+    <div className={classes.space}>
     <BottomNavigation className={classes.stickToBottom}>
       <Typography>&copy;2021 by Group 2</Typography>
     </BottomNavigation>
+    </div>
   );
 };
 
